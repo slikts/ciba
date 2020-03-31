@@ -50,6 +50,11 @@ const Button = ({ textarea, onClose, isUpdate }: Props) => {
         textarea.value = draft;
       }
     }
+    if (isUpdate) {
+      textarea.closest('form').addEventListener('submit', () => {
+        window.localStorage.removeItem('draft');
+      });
+    }
   }, [textarea, isUpdate]);
 
   return (
