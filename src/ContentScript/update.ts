@@ -14,7 +14,7 @@ export const update = () => {
 };
 
 const onClose = (textarea: HTMLTextAreaElement) => {
-  textarea.closest('form').querySelector('select[name="event_format"]').value = 'preformatted';
+  textarea.closest('form')!.querySelector<HTMLSelectElement>('select[name="event_format"]')!.value = 'preformatted';
 };
 
 const pathname = window?.location.pathname;

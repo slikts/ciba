@@ -39,10 +39,10 @@ const Button = ({ textarea, onClose, isUpdate }: Props) => {
     });
   }, [textarea, onClose, isUpdate]);
 
-  const ref = useRef();
+  const ref = useRef<any>();
 
   useEffect(() => {
-    ref.current.appendChild(textarea);
+    ref.current!.appendChild(textarea);
     if (isUpdate) {
       const draft = window.localStorage.getItem('draft');
 
