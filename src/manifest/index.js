@@ -61,7 +61,7 @@ const manifestInput = {
 
   content_scripts: [
     {
-      matches: ['http://klab.lv/*', 'https://*/*'],
+      matches: ['http://klab.lv/*'],
       js: ['js/contentScript.bundle.js'],
     },
   ],
