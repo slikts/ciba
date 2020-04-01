@@ -1,5 +1,10 @@
 import { browser } from 'webextension-polyfill-ts';
+import poll from './poll';
 
-browser.runtime.onInstalled.addListener((): void => {
-  console.log('extension installed');
+browser.alarms.onAlarm.addListener(poll);
+
+browser.runtime.onInstalled.addListener(() => {
+  poll();
+  browser.alarms.create('poll', { periodInMinutes: 5 });
 });
+browser.runtime.onStartup.addListener(poll);

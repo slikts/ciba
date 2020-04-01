@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/camelcase */
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const pkg = require('../../package.json');
+const pkg = require('../package.json');
 
 const manifestInput = {
   manifest_version: 2,
@@ -18,7 +18,7 @@ const manifestInput = {
   homepage_url: 'https://github.com/slikts/ciba',
   short_name: 'Ciba',
 
-  permissions: ['storage', 'http://klab.lv/*'],
+  permissions: ['storage', 'alarms', 'http://klab.lv/*'],
   content_security_policy: "script-src 'self' 'unsafe-eval'; object-src 'self'",
 
   '__chrome|firefox__author': 'slikts',

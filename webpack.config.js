@@ -31,7 +31,7 @@ const extensionReloaderPlugin =
           // TODO: reload manifest on update
           contentScript: 'contentScript',
           background: 'background',
-          extensionPage: ['popup', 'options'],
+          extensionPage: ['popup', 'options', 'reader'],
         },
       })
     : () => {
@@ -55,10 +55,11 @@ module.exports = {
   mode: nodeEnv,
 
   entry: {
-    background: path.join(sourcePath, 'Background', 'index.ts'),
-    contentScript: path.join(sourcePath, 'ContentScript', 'index.ts'),
-    popup: path.join(sourcePath, 'Popup', 'index.tsx'),
-    options: path.join(sourcePath, 'Options', 'index.tsx'),
+    background: path.join(sourcePath, 'background', 'index.ts'),
+    contentScript: path.join(sourcePath, 'content', 'index.ts'),
+    popup: path.join(sourcePath, 'popup', 'index.tsx'),
+    options: path.join(sourcePath, 'options', 'index.tsx'),
+    reader: path.join(sourcePath, 'reader', 'index.tsx'),
   },
 
   output: {
@@ -67,7 +68,7 @@ module.exports = {
   },
 
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json'],
+    extensions: ['.ts', '.tsx', '.js', '.json', '.mjs'],
     alias: {
       'webextension-polyfill-ts': path.resolve(path.join(__dirname, 'node_modules', 'webextension-polyfill-ts')),
     },
@@ -75,6 +76,11 @@ module.exports = {
 
   module: {
     rules: [
+      {
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
+      },
       {
         test: /\.(js|ts)x?$/,
         loader: 'babel-loader',
@@ -145,6 +151,12 @@ module.exports = {
       inject: 'body',
       chunks: ['options'],
       filename: 'options.html',
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(viewsPath, 'reader.html'),
+      inject: 'body',
+      chunks: ['reader'],
+      filename: 'reader.html',
     }),
     // write css file(s) to build folder
     new MiniCssExtractPlugin({ filename: 'css/[name].css' }),
