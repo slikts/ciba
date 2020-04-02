@@ -1,3 +1,4 @@
+import { useState, useCallback } from 'react';
 import sanitizeHtml from 'sanitize-html';
 
 export const sanitizeContent = (dirty: string) => {
@@ -20,4 +21,12 @@ const htmlProps = (__html: string) => {
   return {
     dangerouslySetInnerHTML: { __html },
   };
+};
+
+export const useRerender = () => {
+  const [, setState] = useState<symbol>();
+  return useCallback(() => {
+    // eslint-disable-next-line symbol-description
+    return setState(Symbol());
+  }, [setState]);
 };

@@ -12,7 +12,7 @@ export class Db extends Dexie {
     this.open();
   }
 
-  onCreated(handler: Function) {
+  onCreated(handler: (item: Item) => void) {
     this.on('changes', (changes: any[]) => {
       changes.forEach(({ type, obj }) => {
         if (type === 1) {
