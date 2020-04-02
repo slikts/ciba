@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import Popup from './Popup';
+import App from '../reader/App';
 
-ReactDOM.render(<Popup />, document.getElementById('popup-root'));
+ReactDOM.render(<App />, document.getElementById('root'));
