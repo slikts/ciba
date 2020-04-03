@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import { memo } from 'react';
+import { memo, useCallback } from 'react';
 import { jsx, css } from '@emotion/core';
 import { useTheme } from 'emotion-theming';
 import linkify from 'linkifyjs/html';
@@ -10,8 +10,12 @@ import { sanitizeContent } from '../util';
 
 import User from './User';
 
-const Post = ({ url, title, user, content, date }: PostModel) => {
+const Post = ({ url, title, user, content, date, rows = 3, isFocused, toggleFocus }: Props) => {
   const theme = useTheme<any>();
+
+  const handleFocus = useCallback(() => {
+    toggleFocus(url);
+  }, [toggleFocus, url]);
 
   return (
     <div
@@ -57,16 +61,40 @@ const Post = ({ url, title, user, content, date }: PostModel) => {
       )}
       <div
         css={css`
+          position: relative;
           padding: ${theme.space[2]}px;
         `}
       >
         <div
           css={css`
-            max-height: ${theme.lineHeights.body * 2 * theme.fontSizes[1]}px;
             overflow: hidden;
             text-overflow: ellipsis;
+            ${!isFocused &&
+            css`
+              max-height: ${theme.lineHeights.body * rows * theme.fontSizes[1]}px;
+            `}
           `}
           {...sanitizeContent(linkify(content))}
+        />
+        <button
+          onClick={handleFocus}
+          css={css`
+            background: transparent;
+            border-style: none;
+            cursor: pointer;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            outline: none;
+            ${isFocused &&
+            css`
+              display: none;
+            `}
+          `}
+          type="button"
+          aria-label="Lasīt ierakstu"
         />
       </div>
     </div>
@@ -74,3 +102,9 @@ const Post = ({ url, title, user, content, date }: PostModel) => {
 };
 
 export default memo(Post);
+
+type Props = PostModel & {
+  rows?: number;
+  isFocused: boolean;
+  toggleFocus: (url: string) => void;
+};

@@ -1,5 +1,6 @@
+/* eslint-disable react/jsx-fragments */
 /** @jsx jsx */
-import React from 'react';
+import { useRef, Fragment } from 'react';
 import { ThemeProvider } from 'emotion-theming';
 import { produce } from 'immer';
 import preset from '@rebass/preset';
@@ -20,8 +21,10 @@ const App = () => {
 
   console.log(theme);
 
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
   return (
-    <React.Fragment>
+    <Fragment>
       <Global
         styles={css`
           ${emotionReset} body {
@@ -30,6 +33,9 @@ const App = () => {
             font-size: ${theme.fontSizes[1]}px;
             font-family: Segoe UI, Helvetica, Arial, sans-serif;
             line-height: ${theme.lineHeights.body};
+          }
+          :root {
+            overflow-y: scroll;
           }
           a {
             color: ${theme.colors.primary};
@@ -51,11 +57,12 @@ const App = () => {
             display: flex;
             justify-content: center;
           `}
+          ref={wrapperRef}
         >
-          <Reader />
+          <Reader wrapperRef={wrapperRef} />
         </div>
       </ThemeProvider>
-    </React.Fragment>
+    </Fragment>
   );
 };
 

@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { memo } from 'react';
 import { jsx, css } from '@emotion/core';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { useTheme } from 'emotion-theming';
 
 const User = ({ user }: { user: string }) => {
@@ -21,6 +21,8 @@ const User = ({ user }: { user: string }) => {
           text-decoration: underline;
         }
       `}
+      target="_blank"
+      rel="noreferrer noopener"
     >
       <span
         css={css`
@@ -29,7 +31,7 @@ const User = ({ user }: { user: string }) => {
           // top: -0.15em;
         `}
       >
-        <FontAwesomeIcon icon={faUser} />
+        {/* <FontAwesomeIcon icon={faUser} /> */}
         &nbsp;
       </span>
       <span
